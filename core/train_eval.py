@@ -113,6 +113,17 @@ def train_and_evaluate(
     if not train_loader:
         raise ValueError("Training loader is required")
 
+    # GPU 정보 출력
+    if device.type == "cuda":
+        logger.info(
+            "Using CUDA device: %s | %s | Memory: %.2f GB",
+            torch.cuda.get_device_name(0),
+            device,
+            torch.cuda.get_device_properties(0).total_memory / 1024**3,
+        )
+    else:
+        logger.info("Using CPU device (CUDA not available)")
+    
     logger.info(
         "Starting training | dataset=%s model=%s epochs=%d batch_size=%d",
         dataset_name,
